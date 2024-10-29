@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Qué personaje de Spider-Man eres? - Test en Vue.js</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>¿Qué personaje de Spider-Man eres?</h1>
+            <p>Introduce tu nombre para comenzar el test:</p>
+            <input v-model="nombre" type="text" placeholder="Tu nombre">
+            <button @click="empezarTest">Iniciar Test</button>
+        </header>
+        
+        <section v-if="mostrarTest">
+            <h2>Bienvenido, {{ nombre }}</h2>
+            <p>Responde a las siguientes preguntas:</p>
+
+            <div v-for="(pregunta, index) in preguntas" :key="index">
+                <p>{{ pregunta.texto }}</p>
+                <label v-for="(respuesta, rIndex) in pregunta.opciones" :key="rIndex">
+                    <input type="radio" class="radio-input" v-model="respuestas[index]" :value="respuesta.puntos">
+                    {{ respuesta.texto }}
+                </label>
+            </div>
+
+            <button @click="calcularResultado">Ver Resultado</button>
+        </section>
+
+        <section v-show="mostrarResultado">
+            <h2>Resultado de {{ nombre }}</h2>
+            <p>Total de puntos: {{ totalPuntos }}</p>
+            <p>{{ resultado }}</p>
+            <img v-if="imagenResultado" :src="imagenResultado" alt="Resultado" class="resultado-imagen">
+            <button @click="reiniciarTest">Intentar de nuevo</button>
+        </section>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
